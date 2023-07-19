@@ -1,5 +1,7 @@
 import random
 import string
+from dotenv import dotenv_values
+import os
 
 
 def random_email(length):
@@ -19,3 +21,20 @@ def random_name(length):
     return random_sting + domain_select
 
 
+def load_api_token():
+    """
+    Load the API token from the environment variables.
+
+    Returns:
+        str: The API token.
+    """
+    current_file_path = os.path.abspath(__file__)
+    root_directory = os.path.dirname(current_file_path)
+    env_file_path = os.path.join(root_directory, ".env")
+    env_vars = dotenv_values(env_file_path)
+    api_token = env_vars.get("API_TOKEN")
+
+    if not api_token:
+        raise ValueError("API_TOKEN not found in .env file.")
+
+    return api_token

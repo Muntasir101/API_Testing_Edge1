@@ -14,8 +14,21 @@ api_token = env_vars['API_TOKEN']
 
 base_url = "https://gorest.co.in"
 
+id_list = []
+
 
 def create_users():
+    """
+        Creates a new user by sending a POST request to an API endpoint.
+
+        Returns:
+            str: The response body in JSON format.
+            list: A list containing user information[id].
+
+        Raises:
+            AssertionError: If the status code of the response is not 201.
+
+        """
     api_url = base_url + "/public/v2/users/"
     user_headers = {"Authorization": "Bearer " + api_token}
 
@@ -36,6 +49,11 @@ def create_users():
     except Exception as e:
         print("Get Response Status Code Exception: " + type(e).__name__)
 
+    # Store id in list
+    json_body = response.json()
+    id_list.append(json_body['id'])
+    print("ID List: ", id_list)
+
     # get response body
     json_body = response.json()
     json_data = json.dumps(json_body, indent=4)
@@ -43,4 +61,5 @@ def create_users():
     return json_data
 
 
-create_users()
+for _ in range(2):
+    create_users()

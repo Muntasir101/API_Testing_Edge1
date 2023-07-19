@@ -15,6 +15,16 @@ base_url = "https://gorest.co.in"
 
 
 def get_all_users():
+    """
+            Retrieves a list of all users from an API endpoint.
+
+            Returns:
+                str: The response body in JSON format.
+
+            Raises:
+                requests.exceptions.HTTPError: If there is an error in the HTTP request.
+
+            """
     api_url = base_url + "/public/v2/users/"
     user_headers = {"Authorization": "Bearer " + api_token}
     response = requests.get(api_url, headers=user_headers)
@@ -30,6 +40,7 @@ def get_all_users():
     json_body = response.json()
     json_data = json.dumps(json_body, indent=4)
     print("Response: " + json_data)
+
     return json_data
 
 
